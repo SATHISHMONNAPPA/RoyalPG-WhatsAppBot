@@ -172,3 +172,19 @@ def internal_error(error):
 if __name__ == '__main__':
     logger.info("Starting Royal PG WhatsApp Bot server...")
     app.run(host='0.0.0.0', port=5000, debug=True)
+# Health check route for Render deployment
+@app.route('/status', methods=['GET'])
+def status():
+    return jsonify({
+        "status": "healthy",
+        "services": {
+            "twilio_service": services.get("twilio_service") is not None,
+            "openai_service": services.get("openai_service") is not None,
+            "rate_limiter": services.get("rate_limiter") is not None
+        },
+        "rate_limit_per_minute": config.get("rate_limit_per_minute", 10)
+    }), 200
+
+# Start the Flask app
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
