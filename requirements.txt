@@ -1,6 +1,5 @@
 Flask==2.3.2
-gunicorn==21.2.0
 twilio==8.10.0
-openai==1.11.1
-python-dotenv
-
+requests==2.31.0
+python-dotenv==1.1.1
+gunicorn==21.2.0
